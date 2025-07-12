@@ -12,7 +12,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Minha API Express com Swagger',
+      title: 'Gestão Financeira API',
       version: '1.0.0',
       description:
         'Esta é uma API documentada com Swagger',
@@ -20,6 +20,20 @@ const options = {
     servers: [
       {
         url: `http://localhost:${PORT}/api`, 
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },

@@ -1,28 +1,28 @@
 const db = require('../config/db');
-const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
 
 class UserModel {
 
   async findAll() {
-    const [rows] = await db.execute('SELECT id, nome, email, telefone, created_at, updated_at FROM usuarios');
+    const [rows] = await db.execute('SELECT id, nome, sobrenome, email, telefone, created_at, updated_at FROM usuarios');
     return rows;
   }
 
+  async findByEmail(email) {
+    const [rows] = await db.execute('SELECT id, nome, sobrenome, tipo, passwordHash, email FROM usuarios WHERE email = ?', [email]);
+    return rows[0];
+  }
+
   async findById(id) {
-    const [rows] = await db.execute('SELECT id, nome, email, telefone, created_at, updated_at FROM usuarios WHERE id = ?', [id]);
+    const [rows] = await db.execute('SELECT id, nome, sobrenome, email, telefone, created_at, updated_at FROM usuarios WHERE id = ?', [id]);
     return rows[0];
   }
 
   async create(user) {
-    const { nome, email, senha, telefone } = user;
-
-    const id = uuidv4();
-    const passwordHash = bcrypt.hashSync(senha, 10)
+    const { id, nome, sobrenome, email, passwordHash, telefone } = user;
 
     await db.execute(
-        'INSERT INTO usuarios (id, nome, email, passwordHash, telefone) VALUES (?, ?, ?, ?, ?)',
-        [id, nome, email, passwordHash, telefone]
+        'INSERT INTO usuarios (id, nome, sobrenome, tipo, email, passwordHash, telefone) VALUES (?, ?, ?, 0, ?, ?, ?)',
+        [id, nome, sobrenome, email, passwordHash, telefone]
     );
 
     const CreatedUser = await this.findById(id);
@@ -31,11 +31,11 @@ class UserModel {
   }
 
   async update(id, user) {
-    const { nome, email, telefone } = user;
+    const { nome, sobrenome, email, telefone } = user;
 
     await db.execute(
-        'UPDATE usuarios SET nome = ?, email = ?, telefone = ? WHERE id = ?',
-        [nome, email, telefone, id]
+        'UPDATE usuarios SET nome = ?, sobrenome = ?, email = ?, telefone = ? WHERE id = ?',
+        [nome, sobrenome, email, telefone, id]
     );
 
     const UpdatedUser = await this.findById(id);
