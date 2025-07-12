@@ -1,8 +1,6 @@
-// Importa o model para interagir com o banco de dados
 const User = require('../models/userModel');
 
 class UserController {
-  // Criar um novo usuário
   async createUser(req, res) {
     try {
       const { nome, email, senha, telefone } = req.body;

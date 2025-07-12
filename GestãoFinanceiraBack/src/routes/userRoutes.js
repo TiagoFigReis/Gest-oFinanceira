@@ -1,5 +1,3 @@
-// src/routes/userRoutes.js (VERSÃO CORRIGIDA)
-
 const { Router } = require('express');
 const userController = require('../controllers/userController');
 
