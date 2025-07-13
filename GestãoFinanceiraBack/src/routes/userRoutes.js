@@ -14,6 +14,7 @@ const router = Router();
  *         - id
  *         - nome
  *         - sobrenome
+ *         - tipo
  *         - email
  *         - senha
  *         - telefone
@@ -29,6 +30,9 @@ const router = Router();
  *         sobrenome:
  *           type: string
  *           description: O sobrenome do usuário.
+ *         tipo:
+ *           type: number
+ *           description: O tipo do usuário.
  *         email:
  *           type: string
  *           format: email
@@ -49,6 +53,7 @@ const router = Router();
  *           id: "ffe0e7e3-d84c-4c44-8279-c2cdb84df7b9"
  *           nome: "John"
  *           sobrenome: "Doe"
+ *           tipo: 0
  *           email: "john.doe@example.com"
  *           telefone: "(35) 91111-1111"
  *           created_at: 2025-07-12 09:47:23

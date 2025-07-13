@@ -3,7 +3,7 @@ const db = require('../config/db');
 class UserModel {
 
   async findAll() {
-    const [rows] = await db.execute('SELECT id, nome, sobrenome, email, telefone, created_at, updated_at FROM usuarios');
+    const [rows] = await db.execute('SELECT id, nome, sobrenome, tipo, email, telefone, created_at, updated_at FROM usuarios');
     return rows;
   }
 
@@ -13,7 +13,7 @@ class UserModel {
   }
 
   async findById(id) {
-    const [rows] = await db.execute('SELECT id, nome, sobrenome, email, telefone, created_at, updated_at FROM usuarios WHERE id = ?', [id]);
+    const [rows] = await db.execute('SELECT id, nome, sobrenome, tipo, email, telefone, created_at, updated_at FROM usuarios WHERE id = ?', [id]);
     return rows[0];
   }
 

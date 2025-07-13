@@ -1,10 +1,11 @@
 import { Button, Checkbox, Form, Input, type FormProps } from 'antd';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../../auth/Authorization.service'
 
 type FieldType = {
-  username: string;
-  password: string;
+  email: string;
+  senha: string;
   remember?: boolean;
 };
 
@@ -15,10 +16,10 @@ export default function LoginForm(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        const username = localStorage.getItem('username');
-        if(username){
+        const email = localStorage.getItem('email');
+        if(email){
             form.setFieldsValue({
-                username: username,
+                email: email,
                 remember: true
             })
         }
@@ -27,11 +28,12 @@ export default function LoginForm(){
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
 
         if(values.remember){
-            localStorage.setItem('username', values.username)
+            localStorage.setItem('email', values.email)
         }else{
-            localStorage.removeItem('username')
+            localStorage.removeItem('email')
         }
-        navigate('/home')
+        login(values.email, values.senha, navigate)
+
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -50,16 +52,19 @@ export default function LoginForm(){
       className="w-full max-w-sm bg-gray-800 rounded-xl shadow-lg"
     >
       <Form.Item<FieldType>
-        label={<span className="text-white">Usuário</span>}
-        name="username"
-        rules={[{ required: true, message: 'Por favor, insira seu usuário!' }]}
+        label={<span className="text-white">E-mail</span>}
+        name="email"
+        rules={[
+          { required: true, message: 'Por favor, insira seu e-mail!' },
+          { type: 'email', message: 'E-mail inválido!' }
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item<FieldType>
         label={<span className="text-white">Senha</span>}
-        name="password"
+        name="senha"
         rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
       >
         <Input.Password />

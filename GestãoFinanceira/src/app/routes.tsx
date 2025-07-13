@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import Login from './views/login'
 import Home from './views/home'
+import AuthGuard from '../core/guards/authGuard';
 
 const browserRouter = createBrowserRouter([
   {
@@ -12,8 +13,13 @@ const browserRouter = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/home',
-    element: <Home />,
+    element: <AuthGuard />,
+    children: [
+      {
+        path: '/home',
+        element: <Home />,
+      },
+    ],
   },
 ]);
 
