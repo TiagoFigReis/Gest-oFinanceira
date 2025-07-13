@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, type FormProps } from 'antd';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../auth/Authorization.service'
 
 type FieldType = {
@@ -43,45 +43,63 @@ export default function LoginForm(){
     return(
     <Form
       name="login_form"
-      form={form} 
+      form={form}
+      requiredMark={false}
       layout='vertical'
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       style={{padding:20}}
-      className="w-full max-w-sm bg-gray-800 rounded-xl shadow-lg"
+      className=" bg-white font-normal w-md "
     >
       <Form.Item<FieldType>
-        label={<span className="text-white">E-mail</span>}
+        label={<span className='font-semibold'>E-mail</span>}
         name="email"
         rules={[
           { required: true, message: 'Por favor, insira seu e-mail!' },
           { type: 'email', message: 'E-mail inválido!' }
         ]}
       >
-        <Input />
+        <Input placeholder='example@gmail.com' />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label={<span className="text-white">Senha</span>}
+        label={<span className='font-semibold'>Senha</span>}
         name="senha"
         rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
       >
-        <Input.Password />
+        <Input.Password placeholder='*******' />
       </Form.Item>
 
-      <Form.Item<FieldType>
-        name="remember"
-        valuePropName="checked"
-      >
-        <Checkbox className='!text-white'>Lembrar usuário</Checkbox>
-      </Form.Item>
+      <div className="flex justify-between items-start">
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+        >
+          <Checkbox>Lembrar usuário</Checkbox>
+        </Form.Item>
 
-      <Form.Item className='text-center'>
-        <Button type="primary" htmlType="submit">
-          Login
+        <Link className="font-normal text-sm mt-1" to={"/"}>
+          Esqueceu sua senha?
+        </Link>
+      </div>
+
+      <Form.Item className='text-center min-w-full'>
+        <Button className='min-w-full !font-bold' type="primary" htmlType="submit">
+          Entrar
         </Button>
       </Form.Item>
+
+      <div className="flex items-center my-6">
+        <div className="flex-grow border-t border-gray-300" />
+        <span className="mx-4 text-gray-500 font-medium">Ou</span>
+        <div className="flex-grow border-t border-gray-300" />
+      </div>
+
+      <div className='flex justify-center gap-1'>
+        <p>Não tem uma conta?</p>
+        <Link to={"/sign-up"}>Cadastre-se</Link>
+      </div>
     </Form>
     );
 }

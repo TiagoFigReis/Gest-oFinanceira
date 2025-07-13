@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')!).render(
     <Router />
     <ToastContainer
       position="bottom-right"
-      autoClose={1500}
+      autoClose={2000}
       hideProgressBar={true}
       newestOnTop={false}
       closeOnClick
@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="dark"
+      theme="colored"
     />
   </StrictMode>,
 );
